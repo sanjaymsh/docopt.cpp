@@ -1,5 +1,8 @@
 language: cpp
 sudo: false   # Use the new container infrastructure
+arch:
+  - amd64
+  - ppc64le
 
 matrix:
   include:
@@ -69,6 +72,11 @@ matrix:
       env:
         - COMPILER=clang++ V='Apple LLVM 11.0'
         - COMPILER=clang++ V='Apple LLVM 11.0' WITH_CPP17=true
+
+matrix:
+   exclude:
+       - os: osx
+         arch: ppc64le
 
 before_install:
   - CMAKE_CXX_FLAGS+=" -Wall"
