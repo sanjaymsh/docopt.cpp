@@ -1,12 +1,10 @@
 language: cpp
 sudo: false   # Use the new container infrastructure
-arch:
-  - amd64
-  - ppc64le
 
 matrix:
   include:
     - os: linux
+      arch: amd64
       env:
         - COMPILER=g++-7
       addons:
@@ -14,6 +12,15 @@ matrix:
           sources: ['ubuntu-toolchain-r-test']
           packages: ["g++-7", "cmake-data", "cmake"]
     - os: linux
+      arch: ppc64le
+      env:
+        - COMPILER=g++-7
+      addons:
+        apt:
+          sources: ['ubuntu-toolchain-r-test']
+          packages: ["g++-7", "cmake-data", "cmake"]
+    - os: linux
+      arch: amd64
       env:
         - COMPILER=g++-8
       addons:
@@ -21,6 +28,15 @@ matrix:
           sources: ['ubuntu-toolchain-r-test']
           packages: ["g++-8", "cmake-data", "cmake"]
     - os: linux
+      arch: ppc64le
+      env:
+        - COMPILER=g++-8
+      addons:
+        apt:
+          sources: ['ubuntu-toolchain-r-test']
+          packages: ["g++-8", "cmake-data", "cmake"]
+    - os: linux
+      arch: amd64
       env:
         - COMPILER=g++-9
       addons:
@@ -28,6 +44,23 @@ matrix:
           sources: ['ubuntu-toolchain-r-test']
           packages: ["g++-9", "cmake-data", "cmake"]
     - os: linux
+      arch: ppc64le
+      env:
+        - COMPILER=g++-9
+      addons:
+        apt:
+          sources: ['ubuntu-toolchain-r-test']
+          packages: ["g++-9", "cmake-data", "cmake"]
+    - os: linux
+      arch: amd64
+      env:
+        - COMPILER=g++-9 USE_BOOST_REGEX=ON
+      addons:
+        apt:
+          sources: ['ubuntu-toolchain-r-test']
+          packages: ["g++-9", "cmake-data", "cmake", "libboost-regex-dev"]
+    - os: linux
+      arch: ppc64le
       env:
         - COMPILER=g++-9 USE_BOOST_REGEX=ON
       addons:
@@ -36,6 +69,15 @@ matrix:
           packages: ["g++-9", "cmake-data", "cmake", "libboost-regex-dev"]
 
     - os: linux
+      arch: amd64
+      env:
+        - COMPILER=clang++-3.6 STDLIB=libc++
+      addons:
+        apt:
+          sources: ['ubuntu-toolchain-r-test', 'llvm-toolchain-precise-3.6', 'george-edison55-precise-backports']
+          packages: ["clang-3.6", "cmake-data", "cmake"]
+    - os: linux
+      arch: ppc64le
       env:
         - COMPILER=clang++-3.6 STDLIB=libc++
       addons:
@@ -44,6 +86,16 @@ matrix:
           packages: ["clang-3.6", "cmake-data", "cmake"]
 
     - os: linux
+      arch: amd64
+      env:
+        - COMPILER=clang++-8 STDLIB=libc++
+      addons:
+        apt:
+          sources: ['ubuntu-toolchain-r-test', 'llvm-toolchain-trusty-8']
+          packages: ["clang-8", "cmake-data", "cmake"]
+          
+    - os: linux
+      arch: ppc64le
       env:
         - COMPILER=clang++-8 STDLIB=libc++
       addons:
@@ -72,11 +124,6 @@ matrix:
       env:
         - COMPILER=clang++ V='Apple LLVM 11.0'
         - COMPILER=clang++ V='Apple LLVM 11.0' WITH_CPP17=true
-
-matrix:
-   exclude:
-       - os: osx
-         arch: ppc64le
 
 before_install:
   - CMAKE_CXX_FLAGS+=" -Wall"
